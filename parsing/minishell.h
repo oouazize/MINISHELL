@@ -19,6 +19,7 @@ int exit_status;
 typedef struct node
 {
 	char *name;
+	int	mask;
 	char egal;
 	char *path;
 	struct node	*next;
@@ -77,7 +78,7 @@ int		ft_strstr(const char *s1, const char *s2);
 char	**ft_split(char *s, char c);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 void	ft_lstadd_back(t_node **lst, t_node *new);
-t_node	*ft_lstnew(char *data);
+t_node	*ft_lstnew(char *data, t_node **en, int flag);
 void	ft_lstadd_front(t_node **lst, t_node *new);
 int	ft_isdigit(int d);
 int	ft_isalpha(int c);

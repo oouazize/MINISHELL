@@ -6,7 +6,7 @@
 /*   By: oouazize <oouazize@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 08:47:16 by oouazize          #+#    #+#             */
-/*   Updated: 2022/05/19 13:39:56 by oouazize         ###   ########.fr       */
+/*   Updated: 2022/05/19 15:27:35 by oouazize         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	ft_lstadd_front(t_node **lst, t_node *new)
 	return ;
 }
 
-t_node	*ft_lstnew(char *data)
+t_node	*ft_lstnew(char *data, t_node **en, int flag)
 {
 	t_node	*new;
 	int i=-1;
@@ -62,7 +62,10 @@ t_node	*ft_lstnew(char *data)
 	while (data[++i])
 		path = ft_chrjoin(path, data[i]);
 	new->name = name;
-	new->egal = '=';
+	if (flag)
+		new->egal = '+';
+	else
+		new->egal = '=';
 	new->path = path;
 	new->next = NULL;
 	return (new);
