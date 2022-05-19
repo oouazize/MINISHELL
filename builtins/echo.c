@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oouazize <oouazize@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmounib <mmounib@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:23:10 by oouazize          #+#    #+#             */
-/*   Updated: 2022/05/18 10:40:33 by oouazize         ###   ########.fr       */
+/*   Updated: 2022/05/19 18:05:36 by mmounib          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,37 +26,40 @@ int ft_cmpecho(char *s)
     return (1);
 }
 
-void    echo(t_data *list)
+void    echo(t_data *list, int k)
 {
     int i;
     int flag;
 
     i = -1;
     flag = 0;
-    if (!list->commands->arguments[0])
+    if (!list->commands[k].arguments[0])
             printf("\n");
-    while (list->commands->arguments[++i])
+    while (list->commands[k].arguments[++i])
     {
-        if (ft_cmpecho(list->commands->arguments[i]))
+        if (ft_cmpecho(list->commands[k].arguments[i]))
         {
             i++;
             flag = 1;
-            while (ft_cmpecho(list->commands->arguments[i]))
+            while (ft_cmpecho(list->commands[k].arguments[i]))
                 i++;
         }
         if (flag)
         {
-            write(list->commands->std_out, list->commands->arguments[i], ft_strlen(list->commands->arguments[i]));
-            if (list->commands->arguments[i + 1] != NULL)
-                write(list->commands->std_out, " ", 1);
+			printf("%s\n", list->commands[k].arguments[i]);
+            //write(list->commands->std_out, list->commands->arguments[i], ft_strlen(list->commands->arguments[i]));
+            if (list->commands[k].arguments[i + 1] != NULL)
+				printf(" ");
+            //write(list->commands->std_out, " ", 1);
         }
         else
         {
-			write(list->commands->std_out, list->commands->arguments[i], ft_strlen(list->commands->arguments[i]));
-            if (list->commands->arguments[i + 1] == NULL)
-                write(list->commands->std_out, "\n", 1);
+			printf("%s\n", list->commands[k].arguments[i]);
+			//write(list->commands->std_out, list->commands->arguments[i], ft_strlen(list->commands->arguments[i]));
+            if (list->commands[k].arguments[i + 1] == NULL)
+            	printf("\n");
             else
-                write(list->commands->std_out, " ", 1);
+                printf(" ");
         }
     }
     return ;

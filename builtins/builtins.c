@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oouazize <oouazize@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmounib <mmounib@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 14:23:59 by oouazize          #+#    #+#             */
-/*   Updated: 2022/05/19 13:25:56 by oouazize         ###   ########.fr       */
+/*   Updated: 2022/05/19 18:03:52 by mmounib          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int    builtins(t_data *data, t_node **en, int i)
     if (!data->commands[i].command)
 		return (1);
     else if (ft_strcmp(data->commands[i].command, "echo") == 0)
-		echo(data);
+		echo(data, i);
     else if (ft_strcmp(data->commands[i].command, "cd") == 0)
         cd(data);
     else if (ft_strcmp(data->commands[i].command, "pwd") == 0)

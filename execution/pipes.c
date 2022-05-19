@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oouazize <oouazize@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmounib <mmounib@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 19:08:32 by oouazize          #+#    #+#             */
-/*   Updated: 2022/05/19 13:08:12 by oouazize         ###   ########.fr       */
+/*   Updated: 2022/05/19 18:10:37 by mmounib          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../parsing/minishell.h"
 #include "minishell1.h"
 
-void	ft_exec(t_node **envs, t_data **data, t_pipes *pipes, int i)
+void	ft_dup_exec(t_data **data, t_pipes *pipes, int i)
 {
-	int flag;
+	int	flag;
+	int k;
 
 	flag = 0;
-	char **join = malloc(sizeof(char *) * 2);
-	int k = 0;
+	k = 0;
 	pipes->in = 0;
 	pipes->out = 1;
 	if ((*data)->commands[i].std_in > 2)
@@ -32,6 +32,10 @@ void	ft_exec(t_node **envs, t_data **data, t_pipes *pipes, int i)
 		pipes->out = pipes->pipefd[i][1];
 	dup2(pipes->in,0);
 	dup2(pipes->out,1);
+}
+
+void	ft_exec(t_node **envs, t_data **data, int i)
+{
 	if (!(*data)->commands[i].command && ((*data)->commands[i].std_in || (*data)->commands[i].std_out || (*data)->commands[i].here_doc))
 		exit(0);
 	if(execve(ft_path(*envs, (*data)->commands[i].command, data),
@@ -41,17 +45,8 @@ void	ft_exec(t_node **envs, t_data **data, t_pipes *pipes, int i)
 		(*data)->error = 1;
 		exit_status = 127;
 		exit(127);
-		//return ;
 	}
 	exit(0);
-}
-
-void ft_exit_status(void)
-{
-	if (WIFSIGNALED(exit_status))
-		exit_status = WTERMSIG(exit_status) + 128;
-	else
-		exit_status = WEXITSTATUS(exit_status);
 }
 
 void	ft_wait_pid(t_pipes *pipes, t_data *data)
@@ -84,17 +79,16 @@ void	close_pipes(int (*pipes)[2], int index)
 
 void	ft_pipes(t_pipes *pipes, t_data **data, t_node **envs)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	//printf("ssss\n");
 	if ((*data)->number_of_commands == 1)
 	{
 		if (builtins(*data, envs, i) == 1)
 		{
 			pipes->pid[i] = fork();
 			if (pipes->pid[i] == 0)
-				ft_exec(envs, data, pipes, i);
+				ft_exec(envs, data, i);
 		}
 		ft_wait_pid(pipes, *data);
 		return ;
@@ -109,9 +103,10 @@ void	ft_pipes(t_pipes *pipes, t_data **data, t_node **envs)
 				printf("ERROR!!!\n");
 			if (pipes->pid[i] == 0)
 			{
+				ft_dup_exec(data, pipes, i);
 				close_pipes(pipes->pipefd, i);
 				if (builtins(*data, envs, i) == 1)
-					ft_exec(envs, data, pipes, i);
+					ft_exec(envs, data, i);
 				exit(0);
 			}
 		i++;

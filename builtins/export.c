@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oouazize <oouazize@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmounib <mmounib@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 15:57:18 by oouazize          #+#    #+#             */
-/*   Updated: 2022/05/19 15:57:20 by oouazize         ###   ########.fr       */
+/*   Updated: 2022/05/19 18:14:06 by mmounib          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int if_there(t_node **en, char *spl)
     
 	while (spl[++i] && spl[i] != '=' && spl[i] != '+')
     {
-        if (!ft_isalpha(spl[i]))
+        if (!ft_isalpha(spl[i]) && !ft_isdigit(spl[i]))
         {
             printf("minishell: export: `%s': not a valid identifier\n", spl);
             return (1);
