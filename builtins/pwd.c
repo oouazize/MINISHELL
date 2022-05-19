@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oouazize <oouazize@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmounib <mmounib@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:25:29 by oouazize          #+#    #+#             */
-/*   Updated: 2022/05/18 17:46:00 by oouazize         ###   ########.fr       */
+/*   Updated: 2022/05/19 15:44:32 by mmounib          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,19 @@
 
 void    pwd(void)
 {
-    char cwd[100];
+    char *cwd;
 
     if (chdir("./") != 0)
         return ;
     else
     {
-        if (getcwd(cwd, sizeof(cwd)) == 0)
-            return ;
+        cwd = getcwd(NULL, 0);
+		if (!cwd)
+		{
+			printf("minishell: %s\n", strerror(errno));
+			return ;
+		}
+		printf("%s\n", cwd);
     }
     return ;
 }
