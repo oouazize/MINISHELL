@@ -6,7 +6,7 @@
 /*   By: oouazize <oouazize@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 13:14:16 by oouazize          #+#    #+#             */
-/*   Updated: 2022/05/19 13:11:15 by oouazize         ###   ########.fr       */
+/*   Updated: 2022/05/19 16:27:32 by oouazize         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void	ft_switch2(char **list)
 
 char	**parce(char *read, t_node *en)
 {
+	int flag = 0;
 	char *line = change_line(read);
 	if (!line)
 		return (0);
@@ -81,8 +82,9 @@ char	**parce(char *read, t_node *en)
 	int i = -1;
 	while (list[++i])
 	{
-		list[i] = edit_quote(list[i], en);
-	
+		if (i && !ft_strcmp(list[i - 1], "<<"))
+			flag = 1;
+		list[i] = edit_quote(list[i], en, flag);
 		if (!list[i])
 			return (0);
 	}

@@ -6,7 +6,7 @@
 /*   By: oouazize <oouazize@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:05:26 by oouazize          #+#    #+#             */
-/*   Updated: 2022/05/19 13:09:35 by oouazize         ###   ########.fr       */
+/*   Updated: 2022/05/19 16:18:34 by oouazize         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int double_q(char *line, char **str, int *i, t_node *en)
             if(line[*i] == '$')
 			{
                 if (dollar(line, str, i, en) == 2)
-                    return (2); 
+                    return (2);
                 else
                     (*i)--;
             }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmounib <mmounib@student.42.fr>            +#+  +:+       +#+        */
+/*   By: oouazize <oouazize@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 19:08:32 by oouazize          #+#    #+#             */
-/*   Updated: 2022/05/19 18:10:37 by mmounib          ###   ########.fr       */
+/*   Updated: 2022/05/19 19:55:04 by oouazize         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ void	ft_wait_pid(t_pipes *pipes, t_data *data)
 		waitpid(pipes->pid[i++], &exit_status, 0);
 		exit_status /= 256;
 	}
-	//ft_exit_status();
 }
 
 void	close_pipes(int (*pipes)[2], int index)

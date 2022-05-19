@@ -123,7 +123,8 @@ void	ft_exit_status(void);
 char	**parce(char *read, t_node *en);
 char	*change_line(char *read);
 char	**rechange(char **list);
-char	*edit_quote(char *line, t_node *en);
+char	*edit_quote(char *line, t_node *en, int flag);
+int non_dollar(char *line, char **str, int *i);
 int		double_q(char *line, char **str, int *i, t_node *en);
 int		single_q(char *line, char **str, int *i);
 

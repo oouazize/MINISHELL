@@ -6,7 +6,7 @@
 /*   By: oouazize <oouazize@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 17:09:29 by oouazize          #+#    #+#             */
-/*   Updated: 2022/05/19 13:14:13 by oouazize         ###   ########.fr       */
+/*   Updated: 2022/05/19 16:39:01 by oouazize         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,14 +136,14 @@ void    push(t_data **data, char **list, t_pipes *pipes)
                     printf("minishell: syntax error near unexpected token `newline'\n");
                     (*data)->error = 1;
                     exit_status = 258;
-                    exit(258);
+                    return ;
                 }
                 else if (!ft_strcmp(list[i + 1], "|"))
                 {
                     printf("minishell: syntax error near unexpected token `|'\n");
                     (*data)->error = 1;
                     exit_status = 258;
-                    exit(258);
+                    return ;
                 }
                 (*data)->commands[k].here_doc[her++] = list[++i];
                 // pipe(pipes->pipefd[k]);

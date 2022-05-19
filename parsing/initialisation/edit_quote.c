@@ -6,13 +6,13 @@
 /*   By: oouazize <oouazize@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:14:14 by oouazize          #+#    #+#             */
-/*   Updated: 2022/05/19 13:09:01 by oouazize         ###   ########.fr       */
+/*   Updated: 2022/05/19 18:50:52 by oouazize         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char *edit_quote(char *line, t_node *en)
+char *edit_quote(char *line, t_node *en, int flag)
 {
     int i;
     int retur;
@@ -29,7 +29,10 @@ char *edit_quote(char *line, t_node *en)
         }
         else if (line[i] == 34 || line[i] == '$')
         {
-            retur = double_q(line, &str, &i, en);
+            if (flag)
+                retur = non_dollar(line, &str, &i);
+            else
+                retur = double_q(line, &str, &i, en);
             if (retur == 2)
                 i--;
             if (retur == 1)
