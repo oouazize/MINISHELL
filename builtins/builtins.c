@@ -3,30 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmounib <mmounib@student.42.fr>            +#+  +:+       +#+        */
+/*   By: oouazize <oouazize@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 14:23:59 by oouazize          #+#    #+#             */
-/*   Updated: 2022/05/13 08:28:49 by mmounib          ###   ########.fr       */
+/*   Updated: 2022/05/19 13:25:56 by oouazize         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../parsing/minishell.h"
 
-int    builtins(t_data *data, t_node **en)
+int    builtins(t_data *data, t_node **en, int i)
 {
-    if (ft_strcmp(data->commands->command, "echo") == 0)
+    if (!data->commands[i].command)
+		return (1);
+    else if (ft_strcmp(data->commands[i].command, "echo") == 0)
 		echo(data);
-    else if (ft_strcmp(data->commands->command, "cd") == 0)
+    else if (ft_strcmp(data->commands[i].command, "cd") == 0)
         cd(data);
-    else if (ft_strcmp(data->commands->command, "pwd") == 0)
+    else if (ft_strcmp(data->commands[i].command, "pwd") == 0)
         pwd();
-    else if (ft_strcmp(data->commands->command, "env") == 0)
+    else if (ft_strcmp(data->commands[i].command, "env") == 0)
         print_env(*en);
-    else if (ft_strstr(data->commands->command, "unset"))
+    else if (ft_strcmp(data->commands[i].command, "unset") == 0)
         unset(data, en);
-    else if (ft_strstr(data->commands->command, "export"))
+    else if (ft_strcmp(data->commands[i].command, "export") == 0)
         export(data, en);
+    else if (ft_strcmp(data->commands[i].command, "exit") == 0)
+        ft_exit(data);
 	else
-		return (0);
-	return (1);
+		return (1);
+	return (0);
 }

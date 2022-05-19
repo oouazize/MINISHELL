@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmounib <mmounib@student.42.fr>            +#+  +:+       +#+        */
+/*   By: oouazize <oouazize@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:23:10 by oouazize          #+#    #+#             */
-/*   Updated: 2022/05/13 14:45:04 by mmounib          ###   ########.fr       */
+/*   Updated: 2022/05/18 10:40:33 by oouazize         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void    echo(t_data *list)
 
     i = -1;
     flag = 0;
+    if (!list->commands->arguments[0])
+            printf("\n");
     while (list->commands->arguments[++i])
     {
         if (ft_cmpecho(list->commands->arguments[i]))
@@ -46,15 +48,15 @@ void    echo(t_data *list)
         {
             write(list->commands->std_out, list->commands->arguments[i], ft_strlen(list->commands->arguments[i]));
             if (list->commands->arguments[i + 1] != NULL)
-                printf(" ");
+                write(list->commands->std_out, " ", 1);
         }
         else
         {
 			write(list->commands->std_out, list->commands->arguments[i], ft_strlen(list->commands->arguments[i]));
             if (list->commands->arguments[i + 1] == NULL)
-                printf("\n");
+                write(list->commands->std_out, "\n", 1);
             else
-                printf(" ");
+                write(list->commands->std_out, " ", 1);
         }
     }
     return ;

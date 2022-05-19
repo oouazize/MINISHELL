@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmounib <mmounib@student.42.fr>            +#+  +:+       +#+        */
+/*   By: oouazize <oouazize@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:25:29 by oouazize          #+#    #+#             */
-/*   Updated: 2022/05/11 13:25:39 by mmounib          ###   ########.fr       */
+/*   Updated: 2022/05/18 17:46:00 by oouazize         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,5 @@ void    pwd(void)
         if (getcwd(cwd, sizeof(cwd)) == 0)
             return ;
     }
-    printf("%s\n", cwd);
     return ;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmounib <mmounib@student.42.fr>            +#+  +:+       +#+        */
+/*   By: oouazize <oouazize@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 17:04:36 by oouazize          #+#    #+#             */
-/*   Updated: 2022/05/11 18:09:02 by mmounib          ###   ########.fr       */
+/*   Updated: 2022/05/19 13:34:28 by oouazize         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,24 @@ char    *skip_quote(char *s)
 int if_there(t_node **en, char *spl)
 {
     t_node *ptr;
+    char *tmp;
     int i = -1;
     int flag = 0;
     int p = 1;
     int egal = 0;
     char *name = ft_strdup("");
     char *path = NULL;
-
+    
+    
 	while (spl[++i] && spl[i] != '=' && spl[i] != '+')
+    {
+        if (!ft_isalpha(spl[i]))
+        {
+            printf("minishell: export: `%s': not a valid identifier\n", spl);
+            return (1);
+        }
 		name = ft_chrjoin(name, spl[i]);
+    }
     ptr = *en;
     while (ptr->next)
     {
@@ -58,7 +67,10 @@ int if_there(t_node **en, char *spl)
         {
             egal = 1;
             if (spl[i + 1] != '=')
-                exit (0);
+            {
+                printf("minishell: export: `%s': not a valid identifier\n", spl);
+                return (1);
+            }
             else
                 i++;
             while (spl[++i])
@@ -85,6 +97,7 @@ int if_there(t_node **en, char *spl)
     }
     return (0);
 }
+
 int justname(char *spl)
 {
     int i = -1;
@@ -103,7 +116,12 @@ void    add_node(t_node **en, char *spl)
     if (!if_there(en, spl))
     {
         if (justname(spl))
-            return ;
+        {
+           //(*en)->name = spl;
+            // new = ft_lstnew(spl, 1);
+            // ft_lstadd_front(en, new);
+            //return ;
+        }
         else
         {
             new = ft_lstnew(spl);
@@ -113,21 +131,60 @@ void    add_node(t_node **en, char *spl)
     return ;
 }
 
+void swap(t_node *a, t_node *b)
+{
+    char *temp;
+    char *temp2;
+
+    temp = a->name;
+    temp2 = a->path;
+    a->name = b->name;
+    a->path = b->path;
+    b->name = temp;
+    b->path = temp2;
+}
+
+void bubblesort(t_node *en)
+{
+    int swapped = 1;
+    t_node *ptr1;
+    t_node *lptr = NULL;
+
+    if (en == NULL)
+        return;
+
+    while(swapped)
+    {
+        swapped = 0;
+        ptr1 = en;
+
+        while (ptr1->next != lptr)
+        {
+            if (ft_strcmp(ptr1->name, ptr1->next->name) > 0)
+            { 
+                swap(ptr1, ptr1->next);
+                swapped = 1;
+            }
+            ptr1 = ptr1->next;
+        }
+        lptr = ptr1;
+    }
+    while (en)
+	{
+		printf("declare -x %s%c\"%s\"\n", en->name, en->egal, en->path);
+		en = en->next;
+	}
+}
+
 void    export(t_data *list, t_node **en)
 {
     int i = 0;
 
 	if (!list->commands->arguments[i])
-	{
-		while (*en)
-		{
-			printf("declare -x %s%c\"%s\"\n", (*en)->name, (*en)->egal, (*en)->path);
-			*en = (*en)->next;
-		}
-	}
+        bubblesort(*en);
     else if((list->commands->arguments[i][0] < 'A' || list->commands->arguments[i][0] > 'Z') && (list->commands->arguments[i][0] < 'a' || list->commands->arguments[i][0] > 'z'))
     {
-       printf("my shell: export: `%s': not a valid identifier\n", list->commands->arguments[i]);
+       printf("minishell: export: `%s': not a valid identifier\n", list->commands->arguments[i]);
        exit_status = 1;
        return ;
     }
