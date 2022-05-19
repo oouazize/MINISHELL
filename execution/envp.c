@@ -6,7 +6,7 @@
 /*   By: oouazize <oouazize@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:37:27 by oouazize          #+#    #+#             */
-/*   Updated: 2022/05/14 16:45:47 by oouazize         ###   ########.fr       */
+/*   Updated: 2022/05/19 15:58:45 by oouazize         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void    envp(char **env, t_node **en)
         i = 0;
         while (size-- > 0)
         {
-            new = ft_lstnew(env[i++]);
+            new = ft_lstnew(env[i++], en, 0);
             ft_lstadd_back(en, new);
         }
     }

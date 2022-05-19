@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: oouazize <oouazize@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/16 17:04:36 by oouazize          #+#    #+#             */
-/*   Updated: 2022/05/19 13:34:28 by oouazize         ###   ########.fr       */
+/*   Created: 2022/05/19 15:57:18 by oouazize          #+#    #+#             */
+/*   Updated: 2022/05/19 15:57:20 by oouazize         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,14 +117,12 @@ void    add_node(t_node **en, char *spl)
     {
         if (justname(spl))
         {
-           //(*en)->name = spl;
-            // new = ft_lstnew(spl, 1);
-            // ft_lstadd_front(en, new);
-            //return ;
+            new = ft_lstnew(spl, en, 1);
+            ft_lstadd_front(en, new);
         }
         else
         {
-            new = ft_lstnew(spl);
+            new = ft_lstnew(spl, en, 0);
             ft_lstadd_front(en, new);
         }
     }
@@ -134,14 +132,18 @@ void    add_node(t_node **en, char *spl)
 void swap(t_node *a, t_node *b)
 {
     char *temp;
-    char *temp2;
+    char temp2;
+    char *temp3;
 
     temp = a->name;
-    temp2 = a->path;
+    temp2 = a->egal;
+    temp3 = a->path;
     a->name = b->name;
+    a->egal = b->egal;
     a->path = b->path;
     b->name = temp;
-    b->path = temp2;
+    b->egal = temp2;
+    b->path = temp3;
 }
 
 void bubblesort(t_node *en)
@@ -171,7 +173,10 @@ void bubblesort(t_node *en)
     }
     while (en)
 	{
-		printf("declare -x %s%c\"%s\"\n", en->name, en->egal, en->path);
+        if (en->egal == '+')
+            printf("declare -x %s\n", en->name);
+        else
+		    printf("declare -x %s%c\"%s\"\n", en->name, en->egal, en->path);
 		en = en->next;
 	}
 }
