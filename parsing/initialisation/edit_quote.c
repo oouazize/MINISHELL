@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   edit_quote.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmounib <mmounib@student.42.fr>            +#+  +:+       +#+        */
+/*   By: oouazize <oouazize@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:14:14 by oouazize          #+#    #+#             */
-/*   Updated: 2022/05/13 08:45:29 by mmounib          ###   ########.fr       */
+/*   Updated: 2022/05/19 13:09:01 by oouazize         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ char *edit_quote(char *line, t_node *en)
         else if (line[i] == 34 || line[i] == '$')
         {
             retur = double_q(line, &str, &i, en);
+            if (retur == 2)
+                i--;
             if (retur == 1)
                 return (0);
-            else if (retur == 2)
-                i--;
         }
         else
             str = ft_chrjoin(str, line[i]);

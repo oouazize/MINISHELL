@@ -3,19 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmounib <mmounib@student.42.fr>            +#+  +:+       +#+        */
+/*   By: oouazize <oouazize@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 15:03:10 by oouazize          #+#    #+#             */
-/*   Updated: 2022/05/13 16:02:43 by mmounib          ###   ########.fr       */
+/*   Updated: 2022/05/19 13:11:45 by oouazize         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void sigintHandler(int signum, siginfo_t *siginfo, void *ptr)
+void    sigintHandler(int signum, siginfo_t *siginfo, void *ptr)
 {
 	if (signum == SIGINT)
 	{
+        exit_status = 130;
 		write(1,"\n",1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
@@ -26,16 +27,15 @@ void sigintHandler(int signum, siginfo_t *siginfo, void *ptr)
 void    prompt(char *read, t_node **en, char **env, char ***list)
 {
     while (ft_strcmp(read, "") == 0)
-        read = readline("my Shell : ");
+        read = readline("minishell : ");
     envp(env, en);
     *list = parce(read, *en);
     while (*list == NULL || ft_strcmp(read, "") == 0)
     {
-        read = readline("my Shell : ");
+        read = readline("minishell : ");
         add_history(read);
         *list = parce(read, *en);
     }
-
 }
 
 int	main(int arc, char **arv, char **env)
@@ -46,23 +46,26 @@ int	main(int arc, char **arv, char **env)
     t_data *data;
     t_node *en = NULL;
     t_command_line *cmd = NULL;
-    
-    arc = 0;
+    t_pipes pipes;
+
     arv = NULL;
+    arc = 0;
 	sa.sa_sigaction = &sigintHandler;
 	sigaction(SIGINT, &sa, NULL);
 	signal(SIGQUIT, SIG_IGN);
     while (1)
 	{
-        read = readline("my Shell : ");
+        read = readline("minishell : ");
 		if (read == NULL)
  			exit(1);
         add_history(read);
         prompt(read, &en, env, &list);
         data = malloc(sizeof(t_data));
         init(&data, list, &cmd);
-        push(&data, list);
-		ft_pipes(data, &en);
+        init_pipes(&pipes, data);
+        push(&data, list, &pipes);
+        if (!data->error)
+		    ft_pipes(&pipes, &data, &en);
         // int k = 0;
         // while (k < (*data).pi)
         // {
@@ -77,8 +80,6 @@ int	main(int arc, char **arv, char **env)
         //         printf("STD_IN: %d\n", data->commands[k].std_in);
         //     if (data->commands[k].std_out > 0)
         //         printf("STD_OUT: %d\n", data->commands[k].std_out);
-        //     printf("FILE_IN: %s\n", data->commands[k].in);
-        //     printf("FILE_OUT: %s\n", data->commands[k].out);
         //     k++;
         // }
     }

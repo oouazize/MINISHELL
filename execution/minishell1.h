@@ -21,7 +21,6 @@
 // }				t_node;
 // typedef struct s_pipes
 // {
-// 	int *fds;
 // 	int in;
 // 	int out;
 // 	int fd[2];
@@ -33,7 +32,7 @@
 // void		sigintHandler(int signum, siginfo_t *siginfo, void *ptr);
 static int	ft_wlen(char const *s, char c);
 int			counter(char const *s, char c);
-char		*ft_path(t_node *envs, char *command);
+char	*ft_path(t_node *envs, char *command, t_data **data);
 void		ft_break(char *line);
 int			ft_putchar(char c);
 void		ft_addhistory(char *line);

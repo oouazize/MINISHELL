@@ -6,7 +6,7 @@
 /*   By: oouazize <oouazize@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 14:49:37 by oouazize          #+#    #+#             */
-/*   Updated: 2022/05/11 08:49:32 by oouazize         ###   ########.fr       */
+/*   Updated: 2022/05/17 20:19:20 by oouazize         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ char	*ft_strjoin(char *s1, char *s2)
 	j = 0;
 	if (!s1)
 		return (s2);
+	if (!s2)
+		return (s1);
 	len = ft_strlen(s1);
 	len1 = ft_strlen(s2);
 	string = (char *)malloc((len + len1 + 1) * sizeof(char));

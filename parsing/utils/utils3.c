@@ -6,7 +6,7 @@
 /*   By: oouazize <oouazize@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 08:48:52 by oouazize          #+#    #+#             */
-/*   Updated: 2022/05/11 08:54:36 by oouazize         ###   ########.fr       */
+/*   Updated: 2022/05/14 14:13:22 by oouazize         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,4 +94,24 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 	}
 	dst[i] = '\0';
 	return (count);
+}
+
+int	ft_strchr(const char *s, int c)
+{
+	int		i;
+	char	*src;
+
+	i = 0;
+	if (!s)
+		return (-1);
+	src = (char *)s;
+	while (src[i])
+	{
+		if (src[i] == (char)c)
+			return (i);
+		i++;
+	}
+	if ((char)c == '\0')
+		return (i);
+	return (-1);
 }

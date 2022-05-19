@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parce.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmounib <mmounib@student.42.fr>            +#+  +:+       +#+        */
+/*   By: oouazize <oouazize@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 13:14:16 by oouazize          #+#    #+#             */
-/*   Updated: 2022/05/13 18:45:50 by mmounib          ###   ########.fr       */
+/*   Updated: 2022/05/19 13:11:15 by oouazize         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	ft_switch(char **list)
 
 void	ft_switch2(char **list)
 {
-	int i = 2;
+	int i = 0;
 	int j = 0;
 	char *ptr;
 	char *ptr2;
@@ -67,8 +67,7 @@ void	ft_switch2(char **list)
 			list[0] = ptr;
 			break;
 		}
-		else
-			i++;
+		i++;
 	}
 }
 
@@ -83,12 +82,12 @@ char	**parce(char *read, t_node *en)
 	while (list[++i])
 	{
 		list[i] = edit_quote(list[i], en);
+	
 		if (!list[i])
 			return (0);
 	}
 	ft_switch(list);
 	if (ft_strcmp(list[0], ">") == 0 || ft_strcmp(list[0], "<") == 0 || ft_strcmp(list[0], ">>") == 0 || ft_strcmp(list[0], "<<") == 0)
 		ft_switch2(list);
-	// free(line);
 	return (list);
 }

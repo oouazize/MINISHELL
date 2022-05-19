@@ -1,7 +1,16 @@
-#include "minishell1.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oouazize <oouazize@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/16 14:14:46 by oouazize          #+#    #+#             */
+/*   Updated: 2022/05/17 16:37:15 by oouazize         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-// void ft_split2(char *str2, char c)
-// {
+#include "minishell1.h"
 
 void ft_addhistory(char *line)
 {
@@ -45,7 +54,7 @@ char *get_path_env(t_node *env)
 	return (0);
 }
 
-char	*ft_path(t_node *envs, char *command)
+char	*ft_path(t_node *envs, char *command, t_data **data)
 {
 	char	*pure_paths;
 	char	**paths;
@@ -61,23 +70,15 @@ char	*ft_path(t_node *envs, char *command)
 		paths[i] = ft_strjoin(paths[i], "/");
 		join = ft_strjoin(paths[i], command);
 		if(access(join, X_OK) == 0)
-		{
 			return (join);
-			// printf("%s\n", join);
-			// log = 0;
-			// break ;
-		}
 		i++;
 	}
-
-	if (log == 1)
-	{
-		// if (ft_strchr(command, '/'))
-		// 	return command;
-		write(2, "command not found\n", 18);
-		exit(1);
-	}
-	return (0);
+	// if (log == 1 && !flag)
+	// {
+	// 	write(2, "command not found\n", 18);
+	// 	exit_status = 127;
+	// }
+	return (command);
 }
 
 // void sigintHandler(int signum, siginfo_t *siginfo, void *ptr)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   change_line.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmounib <mmounib@student.42.fr>            +#+  +:+       +#+        */
+/*   By: oouazize <oouazize@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 08:29:05 by oouazize          #+#    #+#             */
-/*   Updated: 2022/05/13 10:16:55 by mmounib          ###   ########.fr       */
+/*   Updated: 2022/05/16 13:11:45 by oouazize         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int add_space(char *read, int *i, char **line)
     }
     else if (read[*i] == '<' && read[(*i) + 1] == '>')
     {
-        printf("Own shell: syntax error near unexpected token `newline'\n");
+        printf("minishell: syntax error near unexpected token `newline'\n");
         exit_status = 258;
         return (0);
     }

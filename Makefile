@@ -4,11 +4,11 @@ CC = gcc -lreadline -L ~/goinfre/.brew/opt/readline/lib -I ~/goinfre/.brew/opt/r
 
 SRCS =	./execution/minishell.c \
 		./execution/ft_putchar.c \
-		./builtins/export.c \
 		./execution/envp.c \
 		./execution/pipes.c \
 		./execution/add_history.c \
 		./parsing/initialisation/rechange.c \
+		./parsing/initialisation/init_pipes.c \
 		./parsing/initialisation/change_line.c \
 		./parsing/initialisation/init.c \
 		./parsing/initialisation/edit_quote.c \
@@ -28,10 +28,10 @@ SRCS =	./execution/minishell.c \
 		./builtins/cd.c \
 		./builtins/echo.c \
 		./builtins/unset.c \
+		./builtins/export.c \
+		./builtins/ft_exit.c \
 		./builtins/pwd.c \
 		./builtins/print_env.c \
-		
-			
 
 # FLAGS = -Wall -Werror -Wextra 
 
