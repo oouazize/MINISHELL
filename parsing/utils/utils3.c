@@ -6,11 +6,11 @@
 /*   By: oouazize <oouazize@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 08:48:52 by oouazize          #+#    #+#             */
-/*   Updated: 2022/05/14 14:13:22 by oouazize         ###   ########.fr       */
+/*   Updated: 2022/05/31 13:37:17 by oouazize         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 char	ft_min_n(char *str, int len, int n)
 {
@@ -74,26 +74,6 @@ char	*ft_itoa(int n)
 	str[len--] = '\0';
 	n_positive(str, len, n);
 	return (str);
-}
-
-size_t	ft_strlcpy(char *dst, const char *src, size_t size)
-{
-	size_t	i;
-	size_t	count;
-
-	i = 0;
-	count = 0;
-	while (src[count])
-		count++;
-	if (size == 0)
-		return (count);
-	while (src[i] && i < size - 1)
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	dst[i] = '\0';
-	return (count);
 }
 
 int	ft_strchr(const char *s, int c)

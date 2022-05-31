@@ -6,11 +6,11 @@
 /*   By: oouazize <oouazize@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 08:47:16 by oouazize          #+#    #+#             */
-/*   Updated: 2022/05/19 15:27:35 by oouazize         ###   ########.fr       */
+/*   Updated: 2022/05/30 10:19:47 by oouazize         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 void	ft_lstadd_back(t_node **lst, t_node *new)
 {
@@ -40,75 +40,58 @@ void	ft_lstadd_front(t_node **lst, t_node *new)
 	return ;
 }
 
+int	lstnew2(char **name, char *data, t_node **new, int *i)
+{
+	*i = -1;
+	*name = ft_strdup("");
+	*new = malloc(sizeof(t_node));
+	if (!(*new))
+		return (0);
+	while (data[++(*i)] && data[*i] != '=' && data[*i] != '+')
+		*name = ft_chrjoin(*name, data[*i]);
+	return (1);
+}
+
+void	lstnew3(t_node **new, char *name, char *path, int flag)
+{
+	if (flag)
+		(*new)->egal = '+';
+	else
+		(*new)->egal = '=';
+	if (!ft_strcmp(path, ""))
+	{
+		free(path);
+		flag = 5;
+	}
+	(*new)->name = name;
+	(*new)->path = path;
+	if (flag == 5)
+		(*new)->path = "";
+	(*new)->next = NULL;
+}
+
 t_node	*ft_lstnew(char *data, t_node **en, int flag)
 {
 	t_node	*new;
-	int i=-1;
-	char *name = ft_strdup("");
-	char *path = ft_strdup("");
+	char	*name;
+	char	*path;
+	int		i;
 
-	new = malloc(sizeof(t_node));
-	if (!new)
+	path = ft_strdup("");
+	if (!lstnew2(&name, data, &new, &i))
 		return (0);
-	while (data[++i] && data[i] != '=' && data[i] != '+')
-		name = ft_chrjoin(name, data[i]);
 	if (data[i] == '+')
 	{
 		if (data[i + 1] != '=')
+		{
+			free(path);
 			exit (0);
+		}
 		else
 			i++;
 	}
-	while (data[++i])
+	while (data[i] && data[++i])
 		path = ft_chrjoin(path, data[i]);
-	new->name = name;
-	if (flag)
-		new->egal = '+';
-	else
-		new->egal = '=';
-	new->path = path;
-	new->next = NULL;
+	lstnew3(&new, name, path, flag);
 	return (new);
-}
-
-int	ft_strcmp(const char *s1, const char *s2)
-{
-	size_t			i;
-	unsigned char	*first;
-	unsigned char	*second;
-
-	i = 0;
-	first = (unsigned char *)s1;
-	second = (unsigned char *)s2;
-	while (first[i] && second[i] && first[i] == second[i])
-		i++;
-	return (first[i] - second[i]);
-}
-
-char	*ft_chrjoin(char *s1, char c)
-{
-	int		i;
-	int		j;
-	char	*string;
-	int		len;
-
-	i = -1;
-	j = 0;
-	if (!s1)
-	{
-		char *s = malloc(sizeof(char) * 2);
-		s[0] = c;
-		s[1]= '\0';
-		return (s);
-	}
-	len = ft_strlen(s1);
-	string = (char *)malloc((len + 2) * sizeof(char));
-	if (string == NULL)
-		return (0);
-	while (s1[++i])
-		string[i] = s1[i];
-	string [i++] = c;
-	string[i] = '\0';
-	free(s1);
-	return (string);
 }

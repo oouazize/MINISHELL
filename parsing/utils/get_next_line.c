@@ -6,11 +6,11 @@
 /*   By: oouazize <oouazize@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 14:10:00 by oouazize          #+#    #+#             */
-/*   Updated: 2022/05/14 14:10:31 by oouazize         ###   ########.fr       */
+/*   Updated: 2022/05/30 15:40:30 by oouazize         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 void	ft_free(char **frfr)
 {
@@ -54,7 +54,7 @@ char	*get_next_line(int fd)
 		if (ret == -1)
 			break ;
 		buff[ret] = 0;
-		save = ft_strjoin(save, buff);
+		save = ft_strjoin1(save, buff);
 	}
 	ft_free(&buff);
 	ft_line(&line, &save, &tmp);

@@ -6,11 +6,31 @@
 /*   By: oouazize <oouazize@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 17:28:18 by oouazize          #+#    #+#             */
-/*   Updated: 2022/05/11 08:50:30 by oouazize         ###   ########.fr       */
+/*   Updated: 2022/05/31 13:37:25 by oouazize         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
+
+size_t	ft_strlcpy(char *dst, const char *src, size_t size)
+{
+	size_t	i;
+	size_t	count;
+
+	i = 0;
+	count = 0;
+	while (src[count])
+		count++;
+	if (size == 0)
+		return (count);
+	while (src[i] && i < size - 1)
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
+	return (count);
+}
 
 static int	ft_word(char const *s, char c)
 {
@@ -38,6 +58,20 @@ static int	ft_counter(char const *s, char c)
 			word++;
 	}
 	return (word);
+}
+
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	size_t			i;
+	unsigned char	*first;
+	unsigned char	*second;
+
+	i = 0;
+	first = (unsigned char *)s1;
+	second = (unsigned char *)s2;
+	while (first[i] && second[i] && first[i] == second[i])
+		i++;
+	return (first[i] - second[i]);
 }
 
 char	**ft_split(char *s, char c)

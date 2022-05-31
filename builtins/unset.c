@@ -3,44 +3,60 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmounib <mmounib@student.42.fr>            +#+  +:+       +#+        */
+/*   By: oouazize <oouazize@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 00:47:01 by oouazize          #+#    #+#             */
-/*   Updated: 2022/05/11 13:26:06 by mmounib          ###   ########.fr       */
+/*   Updated: 2022/05/30 13:17:19 by oouazize         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../parsing/minishell.h"
+#include "../minishell.h"
 
-void    remove_node(t_node **en, char *s)
+void	ft_remove(t_node *prv, char *s)
 {
-    t_node *prv;
-    t_node *ptr;
+	t_node	*ptr;
 
-    prv = *en;
-    if (ft_strcmp(prv->name, s) == 0)
-        *en = (*en)->next;
-    else
-    {
-        while (prv->next)
-        {
-            if (ft_strcmp(prv->next->name, s) == 0)
-            {
-                ptr = prv->next;
-                prv->next = ptr->next;
-                ptr->next = NULL;
-                free(ptr);
-                break;
-            }
-            prv = prv->next;
-        }
-    }
-    return ;
+	while (prv->next)
+	{
+		if (ft_strcmp(prv->next->name, s) == 0)
+		{
+			ptr = prv->next;
+			prv->next = ptr->next;
+			ptr->next = NULL;
+			free(ptr->name);
+			if (ft_strcmp(ptr->path, ""))
+				free(ptr->path);
+			free(ptr);
+			break ;
+		}
+		prv = prv->next;
+	}
 }
-void    unset(t_data *list, t_node **en)
-{
-    int i = -1;
 
-    while(list->commands->arguments[++i])
-        remove_node(en, list->commands->arguments[i]);
+void	remove_node(t_node **en, char *s)
+{
+	t_node	*prv;
+	t_node	*tmp;
+
+	prv = *en;
+	if (ft_strcmp(prv->name, s) == 0)
+	{
+		tmp = *en;
+		*en = (*en)->next;
+		free(tmp->name);
+		if (g_manager.fois)
+			free(tmp->path);
+		free(tmp);
+	}
+	else
+		ft_remove(prv, s);
+}
+
+void	unset(t_data *list, t_node **en)
+{
+	int	i;
+
+	i = -1;
+	while (list->commands->arguments[++i])
+		remove_node(en, list->commands->arguments[i]);
 }

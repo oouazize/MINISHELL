@@ -6,30 +6,32 @@
 /*   By: oouazize <oouazize@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:37:27 by oouazize          #+#    #+#             */
-/*   Updated: 2022/05/19 15:58:45 by oouazize         ###   ########.fr       */
+/*   Updated: 2022/05/29 13:14:04 by oouazize         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../parsing/minishell.h"
+#include "../minishell.h"
 
-void    envp(char **env, t_node **en)
+void	envp(char **env, t_node **en)
 {
-    t_node  *new;
-    int i = -1;
-    int size;
+	t_node	*new;
+	int		i;
+	int		size;
 
-    if (*en)
-        i = 0;
-    if (i == -1)
-    {
-        while (env[++i])
-        {}
-        size = i;
-        i = 0;
-        while (size-- > 0)
-        {
-            new = ft_lstnew(env[i++], en, 0);
-            ft_lstadd_back(en, new);
-        }
-    }
+	i = -1;
+	if (*en)
+		i = 0;
+	if (i == -1)
+	{
+		i++;
+		while (env[i])
+			i++;
+		size = i;
+		i = 0;
+		while (size-- > 0)
+		{
+			new = ft_lstnew(env[i++], en, 0);
+			ft_lstadd_back(en, new);
+		}
+	}
 }

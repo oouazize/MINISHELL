@@ -6,11 +6,11 @@
 /*   By: oouazize <oouazize@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 14:49:37 by oouazize          #+#    #+#             */
-/*   Updated: 2022/05/17 20:19:20 by oouazize         ###   ########.fr       */
+/*   Updated: 2022/05/31 15:14:01 by oouazize         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 size_t	ft_strlen(const char *s)
 {
@@ -46,6 +46,8 @@ char	*ft_strjoin(char *s1, char *s2)
 	while (s2[j])
 		string [i++] = s2[j++];
 	string[i] = '\0';
+	free(s1);
+	free(s2);
 	return (string);
 }
 
@@ -59,6 +61,8 @@ char	*ft_strdup(const char *s1)
 	i = 0;
 	j = 0;
 	l = 0;
+	if (!s1)
+		return (0);
 	while (s1[l])
 		l++;
 	s2 = (char *)malloc(l + 1 * sizeof(char));
@@ -93,7 +97,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (sbstr);
 }
 
-int ft_strstr(const char *s1, const char *s2)
+int	ft_strstr(const char *s1, const char *s2)
 {
 	size_t	i;
 	size_t	j;

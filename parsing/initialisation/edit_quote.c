@@ -6,40 +6,36 @@
 /*   By: oouazize <oouazize@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:14:14 by oouazize          #+#    #+#             */
-/*   Updated: 2022/05/19 18:50:52 by oouazize         ###   ########.fr       */
+/*   Updated: 2022/05/29 13:13:26 by oouazize         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
-char *edit_quote(char *line, t_node *en, int flag)
+char	*edit_quote(char *line, t_node *en, int flag, int i)
 {
-    int i;
-    int retur;
-    char *str;
+	int		retur;
+	char	*str;
 
-    str = NULL;
-    i = -1;
-    while (line[++i])
-    {
-        if (line[i] == 39)
-        {
-            if (single_q(line, &str, &i))
-                return (0);
-        }
-        else if (line[i] == 34 || line[i] == '$')
-        {
-            if (flag)
-                retur = non_dollar(line, &str, &i);
-            else
-                retur = double_q(line, &str, &i, en);
-            if (retur == 2)
-                i--;
-            if (retur == 1)
-                return (0);
-        }
-        else
-            str = ft_chrjoin(str, line[i]);
-    }
-    return (str);
+	str = ft_strdup("");
+	while (line[++i])
+	{
+		if (line[i] == 39)
+		{
+			if (single_q(line, &str, &i))
+				return (0);
+		}
+		else if (line[i] == 34 || line[i] == '$')
+		{
+			if (flag)
+				retur = non_dollar(line, &str, &i);
+			else
+				retur = double_q(line, &str, &i, en);
+			if (retur == 2)
+				i--;
+		}
+		else
+			str = ft_chrjoin(str, line[i]);
+	}
+	return (str);
 }
