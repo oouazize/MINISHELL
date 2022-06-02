@@ -6,7 +6,7 @@
 /*   By: oouazize <oouazize@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 08:47:16 by oouazize          #+#    #+#             */
-/*   Updated: 2022/05/30 10:19:47 by oouazize         ###   ########.fr       */
+/*   Updated: 2022/06/01 10:27:20 by oouazize         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	lstnew3(t_node **new, char *name, char *path, int flag)
 	(*new)->next = NULL;
 }
 
-t_node	*ft_lstnew(char *data, t_node **en, int flag)
+t_node	*ft_lstnew(char *data, int flag)
 {
 	t_node	*new;
 	char	*name;

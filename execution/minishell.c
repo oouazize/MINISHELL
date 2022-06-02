@@ -6,7 +6,7 @@
 /*   By: oouazize <oouazize@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 14:14:46 by oouazize          #+#    #+#             */
-/*   Updated: 2022/05/30 10:51:57 by oouazize         ###   ########.fr       */
+/*   Updated: 2022/05/31 23:45:46 by oouazize         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	ft_path2(char *cwd, char ***paths)
 	return (0);
 }
 
-char	*ft_path(t_node *envs, char *command, t_data **data, char *cwd)
+char	*ft_path(t_node *envs, char *command, char *cwd)
 {
 	char	*pure_paths;
 	char	**paths;

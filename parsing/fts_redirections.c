@@ -6,7 +6,7 @@
 /*   By: oouazize <oouazize@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 10:57:04 by oouazize          #+#    #+#             */
-/*   Updated: 2022/05/31 19:09:24 by oouazize         ###   ########.fr       */
+/*   Updated: 2022/05/31 23:49:10 by oouazize         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	ft_here2(t_data **data, int *her, char *line)
 	}
 }
 
-void	ft_here_doc(t_data **data, int *her)
+void	ft_here_doc(t_data **data)
 {
 	char	*line;
 	int		pid;
@@ -92,6 +92,7 @@ void	ft_here_doc(t_data **data, int *her)
 		exit(0);
 	}
 	waitpid(pid, &g_manager.exit_status, 0);
+	g_manager.exit_status /= 256;
 	g_manager.flag_sig = 0;
 }
 
@@ -103,7 +104,7 @@ int	herdoc(t_data **data, char **list, int *i)
 		.here_doc[(*data)->her] = ft_strdup(list[++(*i)]);
 	(*data)->tmp_fd = open("/tmp/tmp", O_CREAT | O_RDWR | O_TRUNC, 0777);
 	(*data)->commands[(*data)->k].std_in = (*data)->tmp_fd;
-	ft_here_doc(data, &(*data)->her);
+	ft_here_doc(data);
 	(*data)->tmp_fd = open("/tmp/tmp", O_CREAT | O_RDWR, 0777);
 	(*data)->commands[(*data)->k].std_in = (*data)->tmp_fd;
 	(*data)->her++;

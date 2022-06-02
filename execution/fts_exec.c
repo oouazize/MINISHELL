@@ -6,7 +6,7 @@
 /*   By: oouazize <oouazize@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 12:58:08 by oouazize          #+#    #+#             */
-/*   Updated: 2022/05/31 14:15:55 by oouazize         ###   ########.fr       */
+/*   Updated: 2022/06/01 19:16:07 by oouazize         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,27 +41,35 @@ void	ft_dup_exec(t_data **data, t_pipes *pipes, int i)
 	dup2(pipes->out, 1);
 }
 
+void	ft_print(t_data **data, char *path, int i)
+{
+	if (!ft_strcmp(path, "NO"))
+	{
+		printf("minishell: %s: No such file or directory\n",
+			(*data)->commands[i].command);
+		g_manager.exit_status = 1;
+		exit(1);
+	}
+	else
+		printf("minishell: %s: command not found\n",
+			(*data)->commands[i].command);
+}
+
 void	ft_exec(t_node **envs, t_data **data, int i)
 {
 	char	*path;
 	char	*cwd;
 
 	cwd = getcwd(NULL, 0);
-	path = ft_path(*envs, (*data)->commands[i].command, data, cwd);
+	path = ft_path(*envs, (*data)->commands[i].command, cwd);
 	free(cwd);
-	if (!(*data)->commands[i].command
-		&& ((*data)->commands[i].std_in || (*data)->commands[i].std_out
-			|| (*data)->commands[i].here_doc))
+	if (!(*data)->commands[i].command && ((*data)->commands[i].std_in
+			|| (*data)->commands[i].std_out || (*data)->commands[i].here_doc))
 		exit(0);
 	if (execve(path, tjoin((*data)->commands[i].command,
 				(*data)->commands[i].arguments), env_to_char(*envs)) == -1)
 	{
-		if (!ft_strcmp(path, "NO"))
-			printf("minishell: %s: No such file or directory\n",
-				(*data)->commands[i].command);
-		else
-			printf("minishell: %s: command not found\n",
-				(*data)->commands[i].command);
+		ft_print(data, path, i);
 		(*data)->error = 1;
 		g_manager.exit_status = 127;
 		exit(127);

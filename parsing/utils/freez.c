@@ -6,7 +6,7 @@
 /*   By: oouazize <oouazize@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 13:02:16 by oouazize          #+#    #+#             */
-/*   Updated: 2022/05/29 21:40:14 by oouazize         ###   ########.fr       */
+/*   Updated: 2022/05/31 23:47:35 by oouazize         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	free_data(t_data **g)
 	free(*g);
 }
 
-void	ft_free_all(t_data **data, t_pipes *pipes, t_exp *exp, char **list)
+void	ft_free_all(t_data **data, t_pipes *pipes)
 {
 	free(pipes->pipefd);
 	free(pipes->pid);

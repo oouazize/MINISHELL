@@ -6,7 +6,7 @@
 /*   By: oouazize <oouazize@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 13:14:16 by oouazize          #+#    #+#             */
-/*   Updated: 2022/05/30 20:55:43 by oouazize         ###   ########.fr       */
+/*   Updated: 2022/06/01 20:02:38 by oouazize         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	ft_switch2(char **list)
 	int		i;
 	int		j;
 	char	*ptr;
-	char	*ptr2;
 
 	i = -1;
 	j = 0;
@@ -88,18 +87,28 @@ int	norm_parce(char **list, t_node *en, int i)
 	return (0);
 }
 
-char	**parce(char *read, t_node *en)
+int	check_parce(char **list, char **line)
+{
+	if (!list[0])
+	{
+		free(*line);
+		return (0);
+	}
+	free(*line);
+	return (1);
+}
+
+char	**parce(char *read, t_node *en, int i)
 {
 	char	**list;
 	char	*line;
-	int		i;
 
-	i = -1;
 	line = change_line(read);
 	if (ft_strcmp(line, "") == 0)
 		return (0);
 	list = ft_split(line, 32);
-	free(line);
+	if (check_parce(list, &line) == 0)
+		return (0);
 	list = rechange(list);
 	while (list[++i])
 	{

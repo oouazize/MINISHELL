@@ -6,96 +6,116 @@
 /*   By: oouazize <oouazize@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 19:21:03 by oouazize          #+#    #+#             */
-/*   Updated: 2022/05/31 18:46:26 by oouazize         ###   ########.fr       */
+/*   Updated: 2022/06/01 12:14:39 by oouazize         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-static	int	ft_beginning(char const *s1, char const *set)
+char	*ft_strjoin1(char *s1, char *s2)
 {
-	int	beg;
-	int	i;
+	int		i;
+	int		j;
+	char	*string;
+	int		len;
+	int		len1;
 
-	beg = 0;
+	i = -1;
+	j = 0;
+	if (!s1)
+		return (s2);
+	if (!s2)
+		return (s1);
+	len = ft_strlen(s1);
+	len1 = ft_strlen(s2);
+	string = (char *)malloc((len + len1 + 1) * sizeof(char));
+	if (string == NULL)
+		return (0);
+	while (s1[++i])
+		string[i] = s1[i];
+	while (s2[j])
+		string [i++] = s2[j++];
+	string[i] = '\0';
+	free(s1);
+	return (string);
+}
+
+static int	ft_start(char *s, char *set)
+{
+	int	i;
+	int	j;
+	int	d;
+
 	i = 0;
-	while (set[beg])
+	while (s[i])
 	{
-		if (s1[i] == set[beg])
+		j = 0;
+		d = 0;
+		while (set[j])
 		{
-			i++;
-			if (!set[beg + 1])
-				beg = '\0';
-			else
-				beg = 0;
+			if (s[i] == set[j])
+				d++;
+			j++;
 		}
-		else
-			beg++;
+		if (d == 0)
+			break ;
+		i++;
 	}
 	return (i);
 }
 
-static int	ft_end(char const *s1, char const *set, int len)
+static int	ft_end(char *s, char *set)
 {
-	int	end;
+	int	i;
+	int	j;
+	int	d;
 
-	end = 0;
-	len -= 1;
-	while (set[end])
+	i = ft_strlen(s) - 1;
+	while (i >= 0)
 	{
-		if (s1[len] == set[end])
+		j = 0;
+		d = 0;
+		while (set[j])
 		{
-			len--;
-			if (!set[end + 1])
-				end = '\0';
-			else
-				end = 0;
+			if (s[i] == set[j])
+				d++;
+			j++;
 		}
-		else
-			end++;
+		if (d == 0)
+			break ;
+		i--;
 	}
-	return (len);
-}
-
-static char	*ft_alloc(char const *s1, int i, int len)
-{
-	int		t;
-	char	*trim;
-
-	t = 0;
-	trim = (char *)malloc((len - i + 2) * sizeof(char));
-	if (!trim)
-		return (0);
-	while (i <= len)
-		trim[t++] = s1[i++];
-	trim[t] = 0;
-	return (trim);
+	if (i == -1)
+		i = (int)ft_strlen(s);
+	return (i);
 }
 
 char	*ft_strtrim(char const *s1, char const *set)
 {
 	int		i;
-	int		len;
-	int		t;
-	char	*trim;
+	char	*s;
+	char	*p;
+	int		start;
+	int		end;
 
-	t = 0;
-	i = 0;
-	trim = NULL;
-	if (!s1)
-		return (0);
-	len = ft_strlen(s1);
-	i = ft_beginning(s1, set);
-	len = ft_end(s1, set, len);
-	if (i > len)
-	{
-		trim = (char *)malloc(sizeof(char));
-		trim[t] = 0;
-		return (trim);
-	}
-	trim = ft_alloc(s1, i, len);
-	if (!trim)
+	if (!s1 || !set)
 		return (NULL);
-	free((void *)s1);
-	return (trim);
+	s = (char *)s1;
+	start = ft_start(s, (char *) set);
+	end = ft_end(s, (char *) set);
+	p = malloc(((end - start) + 2) * sizeof(char));
+	if (p == NULL)
+		return (0);
+	i = 0;
+	while (start <= end)
+		p[i++] = s[start++];
+	p[i] = '\0';
+	return (p);
+}
+
+void	close_wait_help(t_pipes *pipes, t_data **data)
+{
+	ft_close_pipes1(pipes, data);
+	ft_wait_pid(pipes, *data);
+	g_manager.flag_sig = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: oouazize <oouazize@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 12:06:55 by oouazize          #+#    #+#             */
-/*   Updated: 2022/05/31 16:02:47 by oouazize         ###   ########.fr       */
+/*   Updated: 2022/06/01 20:05:35 by oouazize         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,13 @@
 
 typedef struct s_glb
 {
-	int	flag_sig;
-	int	exit_status;
-	int	fois;
-	int	f_status;
-	int	fd_file;
+	int		flag_sig;
+	int		exit_status;
+	int		fois;
+	int		f_status;
+	int		fd_file;
+	char	*env_nopath;
+	int		dlr;
 }				t_glb;
 
 t_glb	g_manager;
@@ -115,7 +117,7 @@ int				ft_strchr(const char *s, int c);
 int				ft_strstr(const char *s1, const char *s2);
 char			**ft_split(char *s, char c);
 void			ft_lstadd_back(t_node **lst, t_node *new);
-t_node			*ft_lstnew(char *data, t_node **en, int flag);
+t_node			*ft_lstnew(char *data, int flag);
 void			ft_lstadd_front(t_node **lst, t_node *new);
 int				ft_isdigit(int d);
 int				ft_isalpha(int c);
@@ -138,8 +140,8 @@ void			remove_node(t_node **en, char *s);
 void			free_spl(char **list);
 void			free_str(t_command_line *c);
 void			free_data(t_data **g);
-void			ft_free_all(t_data **data, t_pipes *pipes,
-					t_exp *exp, char **list);
+void			ft_free_all(t_data **data, t_pipes *pipes);
+void			ft_add(void);
 
 //#########################################################
 //#                                                       #
@@ -173,7 +175,7 @@ void			ft_exit_status(void);
 //#                                                       #
 //#########################################################
 
-char			**parce(char *read, t_node *en);
+char			**parce(char *read, t_node *en, int i);
 char			*change_line(char *read);
 char			**rechange(char **list);
 char			*edit_quote(char *line, t_node *en, int flag, int i);
@@ -182,7 +184,7 @@ int				double_q(char *line, char **str, int *i, t_node *en);
 int				dollar(char *line, char **str, int *i, t_node *en);
 char			*dlr_path(char *env, t_node *en);
 int				single_q(char *line, char **str, int *i);
-void			push(t_data **data, char **list, t_pipes *pipes, int i);
+void			push(t_data **data, char **list, int i);
 
 //#########################################################
 //#                                                       #
@@ -193,7 +195,7 @@ void			push(t_data **data, char **list, t_pipes *pipes, int i);
 //#########################################################
 
 int				herdoc(t_data **data, char **list, int *i);
-void			ft_here_doc(t_data **data, int *her);
+void			ft_here_doc(t_data **data);
 int				redirection(t_data **data, char **list, int *i);
 void			red2(t_data **data, char **list, int *i);
 int				error_redirection(t_data **data, char **list, int *i);
@@ -210,9 +212,11 @@ void			close_pipes(int (*pipes)[2], int index);
 void			sigintHandler(int signum);
 char			**env_to_char(t_node *en);
 void			ft_dup_exec(t_data **data, t_pipes *pipes, int i);
+void			close_wait_help(t_pipes *pipes, t_data **data);
+void			ft_close_pipes1(t_pipes *pipes, t_data **data);
 
 int				counter(char const *s, char c);
-char			*ft_path(t_node *envs, char *command, t_data **data, char *cwd);
+char			*ft_path(t_node *envs, char *command, char *cwd);
 void			ft_addhistory(char *line);
 
 void			push_in_path(t_node *ptr, t_exp exp);

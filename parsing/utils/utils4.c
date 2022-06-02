@@ -6,7 +6,7 @@
 /*   By: oouazize <oouazize@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 11:48:30 by oouazize          #+#    #+#             */
-/*   Updated: 2022/05/31 15:14:49 by oouazize         ###   ########.fr       */
+/*   Updated: 2022/06/01 12:15:43 by oouazize         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,26 @@
 
 int	error_redirection(t_data **data, char **list, int *i)
 {
-	if (list[*i + 1] == NULL)
+	if (list[*i + 1] == NULL || !ft_strcmp(list[*i + 1], "|")
+		|| !ft_strcmp(list[*i + 1], "<")
+		|| !ft_strcmp(list[*i + 1], ">") || !ft_strcmp(list[*i + 1], "<<")
+		|| !ft_strcmp(list[*i + 1], ">>"))
 	{
-		printf("minishell: syntax error near unexpected token `newline'\n");
+		if (list[*i + 1] == NULL)
+			printf("minishell: syntax error near unexpected token `newline'\n");
+		else
+			printf("minishell: syntax error near unexpected token `%s'\n",
+				list[++(*i)]);
 		(*data)->error = 1;
 		g_manager.exit_status = 258;
 		return (1);
 	}
-	if (!ft_strcmp(list[*i + 1], "|") || !ft_strcmp(list[*i + 1], "<")
-		|| !ft_strcmp(list[*i + 1], ">") || !ft_strcmp(list[*i + 1], "<<")
-		|| !ft_strcmp(list[*i + 1], ">>"))
+	if (!ft_strcmp(list[*i + 1], ""))
 	{
-		printf("minishell: syntax error near unexpected token `%s'\n",
-			list[++(*i)]);
+		printf("minishell: $%s: ambiguous redirect\n", g_manager.env_nopath);
+		free(g_manager.env_nopath);
 		(*data)->error = 1;
-		g_manager.exit_status = 258;
+		g_manager.exit_status = 1;
 		return (1);
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: oouazize <oouazize@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 15:57:18 by oouazize          #+#    #+#             */
-/*   Updated: 2022/05/29 21:33:32 by oouazize         ###   ########.fr       */
+/*   Updated: 2022/05/31 23:52:54 by oouazize         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	add_node(t_exp exp, t_node **en, char *spl)
 	i = if_there(exp, spl, *en);
 	if (!i)
 	{
-		new = ft_lstnew(spl, en, justname(spl));
+		new = ft_lstnew(spl, justname(spl));
 		ft_lstadd_front(en, new);
 	}
 	else if (i == 2)

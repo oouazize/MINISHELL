@@ -6,7 +6,7 @@
 /*   By: oouazize <oouazize@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 19:08:32 by oouazize          #+#    #+#             */
-/*   Updated: 2022/05/31 19:08:49 by oouazize         ###   ########.fr       */
+/*   Updated: 2022/06/01 19:10:02 by oouazize         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,17 +58,13 @@ int	ft_pipes1(t_exp exp, t_pipes *pipes, t_data **data, t_node **envs)
 			if (pipes->pid[0] == 0)
 			{
 				signal(SIGQUIT, SIG_DFL);
-				printf("____%d\n", g_manager.flag_sig);
-				if (g_manager.flag_sig == 1)
-				{
-                	ft_dup_exec(data, pipes, 0);
-					ft_exec(envs, data, 0);
-				}
+				ft_dup_exec(data, pipes, 0);
+				ft_exec(envs, data, 0);
 			}
 		}
-		if ((*data)->commands[0].std_in > 2)
+		if ((*data)->commands[0].std_in > 0)
 			close((*data)->commands[0].std_in);
-		if ((*data)->commands[0].std_out > 2)
+		if ((*data)->commands[0].std_out > 1)
 			close((*data)->commands[0].std_out);
 		ft_wait_pid(pipes, *data);
 		g_manager.flag_sig = 0;
@@ -89,31 +85,24 @@ void	ft_pipes(t_exp exp, t_pipes *pipes, t_data **data, t_node **envs)
 {
 	int	i;
 
-	i = 0;
-	if (ft_pipes1(exp, pipes, data, envs) == 0)
+	i = -1;
+	if (g_manager.exit_status == 130 || ft_pipes1(exp, pipes, data, envs) == 0)
 		return ;
-	while (i < (*data)->number_of_commands)
+	while (++i < (*data)->number_of_commands)
 	{
 		if (pipe(pipes->pipefd[i]) == -1)
 			printf("ERROR!!!\n");
-		g_manager.flag_sig = 1;
-	pipes->pid[i] = fork();
-	if (pipes->pid[i])
-		g_manager.flag_sig = -1;
+		sig_pipe(pipes, i);
 		if (pipes->pid[i] == -1)
 			printf("ERROR!!!\n");
 		if (pipes->pid[i] == 0)
 		{
-			signal(SIGQUIT, SIG_DFL);
 			ft_dup_exec(data, pipes, i);
 			close_pipes(pipes->pipefd, i);
 			if (builtins(exp, *data, envs, i) == 1)
 				ft_exec(envs, data, i);
 			exit(0);
 		}
-		i++;
 	}
-	ft_close_pipes1(pipes, data);
-	ft_wait_pid(pipes, *data);
-	g_manager.flag_sig = 0;
+	close_wait_help(pipes, data);
 }

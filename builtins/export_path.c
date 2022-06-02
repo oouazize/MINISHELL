@@ -6,7 +6,7 @@
 /*   By: oouazize <oouazize@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 21:10:46 by oouazize          #+#    #+#             */
-/*   Updated: 2022/05/30 19:07:34 by oouazize         ###   ########.fr       */
+/*   Updated: 2022/06/01 14:50:48 by oouazize         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,8 @@ void	push_in_path(t_node *ptr, t_exp exp)
 	{
 		ptr->egal = '=';
 		pathi = ft_strdup(ptr->path);
-		free(ptr->path);
+		if (g_manager.fois)
+			free(ptr->path);
 		ptr->path = ft_strjoin(pathi, exp.path);
 		g_manager.fois = 1;
 	}

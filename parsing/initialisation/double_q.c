@@ -6,7 +6,7 @@
 /*   By: oouazize <oouazize@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:05:26 by oouazize          #+#    #+#             */
-/*   Updated: 2022/05/29 22:51:40 by oouazize         ###   ########.fr       */
+/*   Updated: 2022/06/01 20:17:13 by oouazize         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ char	*dlr_path(char *env, t_node *en)
 			return (ft_strdup(en->path));
 		en = en->next;
 	}
+	g_manager.env_nopath = env;
 	return (0);
 }
 
@@ -34,6 +35,17 @@ int	double_q2(char *line, char **str, int *i, t_node *en)
 	}
 	else
 		*str = ft_chrjoin(*str, line[*i]);
+	return (0);
+}
+
+int	double_q3(char *line, char **str, int *i, t_node *en)
+{
+	*i -= 1000;
+	g_manager.dlr = 1;
+	if (dollar(line, str, i, en) == 2)
+		return (1);
+	else
+		(*i)--;
 	return (0);
 }
 
@@ -55,11 +67,8 @@ int	double_q(char *line, char **str, int *i, t_node *en)
 	}
 	else
 	{
-		*i -= 1000;
-		if (dollar(line, str, i, en) == 2)
+		if (double_q3(line, str, i, en))
 			return (2);
-		else
-			(*i)--;
 	}
 	if (flag)
 		*str = ft_chrjoin(*str, 1);

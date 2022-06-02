@@ -6,7 +6,7 @@
 /*   By: oouazize <oouazize@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 08:29:05 by oouazize          #+#    #+#             */
-/*   Updated: 2022/05/30 13:06:46 by oouazize         ###   ########.fr       */
+/*   Updated: 2022/06/01 14:13:35 by oouazize         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ char	*change_line(char *read)
 	while (read != NULL && read[++i])
 	{
 		if (add_space(read, &i, &line) == 0)
-			return (NULL);
+			return (ft_strdup(""));
 		if (!read[i])
 			break ;
 	}

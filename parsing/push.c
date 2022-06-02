@@ -6,7 +6,7 @@
 /*   By: oouazize <oouazize@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 17:09:29 by oouazize          #+#    #+#             */
-/*   Updated: 2022/05/31 17:54:42 by oouazize         ###   ########.fr       */
+/*   Updated: 2022/06/01 20:01:03 by oouazize         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,16 @@ int	push2(t_data **data, char **list, int *i)
 	return (0);
 }
 
-void	push(t_data **data, char **list, t_pipes *pipes, int i)
+void	push(t_data **data, char **list, int i)
 {
-	while ((*data)->index < (*data)->number_of_commands)
+	g_manager.exit_status = 0;
+	while ((*data)->index < (*data)->number_of_commands
+		&& g_manager.exit_status != 130)
 	{
 		(*data)->arg = 0;
 		(*data)->her = 0;
-		while (list[++i] && ft_strcmp(list[i], "|"))
+		while (list[++i] && ft_strcmp(list[i], "|")
+			&& g_manager.exit_status != 130)
 		{
 			if (!ft_strcmp(list[i], ">") || !ft_strcmp(list[i], ">>")
 				|| !ft_strcmp(list[i], "<") || !ft_strcmp(list[i], "<<"))

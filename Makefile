@@ -1,6 +1,6 @@
 NAME = minishell
 
-CC = gcc -lreadline -L ~/goinfre/.brew/opt/readline/lib -I ~/goinfre/.brew/opt/readline/include #-fsanitize=address -g
+CC = gcc -lreadline -L ~/goinfre/.brew/opt/readline/lib -I ~/goinfre/.brew/opt/readline/include
 
 SRCS =	./execution/minishell.c \
 		./execution/envp.c \
@@ -23,7 +23,6 @@ SRCS =	./execution/minishell.c \
 		./parsing/utils/utils4.c \
 		./parsing/utils/utils3.c \
 		./parsing/utils/utils2.c \
-		./parsing/utils/ft_strjoin1.c \
 		./parsing/utils/ft_strtrim.c \
 		./parsing/utils/get_next_line.c \
 		./parsing/utils/tjoin.c \
@@ -41,7 +40,7 @@ SRCS =	./execution/minishell.c \
 		./builtins/pwd.c \
 		./builtins/print_env.c \
 
-# FLAGS = -Wall -Werror -Wextra 
+FLAGS = -Wall -Werror -Wextra 
 
 RM = rm -rf  
 
@@ -51,6 +50,24 @@ all: $(NAME)
 
 $(NAME):$(SRCS)   
 	@${CC} ${FLAGS} $(SRCS) -o ${NAME}
+	@echo "\033[1;36m                                                                                  ,--,      ,--,    "
+	@echo "\033[1;36m          ____                   ,--.                            ,--,          ,---.'|   ,---.'|    "
+	@echo "\033[1;36m        ,'  , ..   ,---,       ,--.'|   ,---,  .--.--.         ,--.'|    ,---,.|   | :   |   | :    "
+	@echo "\033[1;36m     ,-+-,.' _ |,.--.' |   ,--,:  : |,.--.' | /  /    '.    ,--,  | :  ,'  .' |:   : |   :   : |    "
+	@echo "\033[1;36m  ,-+-. ;   , |||   :  :,.--.'.|  ' :|   :  :|  :  /.. / ,---.'|  : ',---.'   ||   ' :   |   ' :    "
+	@echo "\033[1;36m ,--.'|'   |  ;|:   |  '|   :  :  | |:   |  ';  |  |--.  |   | : _' ||   |   .';   ; '   ;   ; '    "
+	@echo "\033[1;36m|   |  ,', |  ':|   :  |:   |   \ | :|   :  ||  :  ;_    :   : |.'  |:   :  |-,'   | |__ '   | |__  "
+	@echo "\033[1;36m|   | /  | |  ||'   '  ;|   : '  '; |'   '  ; \  \    .. |   ' '  ; ::   |  ;/||   | :.'||   | :.'| "
+	@echo "\033[1;36m'   | :  | :  |,|   |  |'   ' ;.    ;|   |  |  .----.   \'   |  .'. ||   :   .''   :    ;'   :    ; "
+	@echo "\033[1;36m;   . |  ; |--' '   :  ;|   | | \   |'   :  ;  __ \  \  ||   | :  | '|   |  |-,|   |  ./ |   |  ./  "
+	@echo "\033[1;36m|   : |  | ,    |   |  ''   : |  ; .'|   |  ' /  /.--'  /'   : |  : ;'   :  ;/|;   : ;   ;   : ;    "
+	@echo "\033[1;36m|   : '  |/     '   :  ||   | '.--'  '   :  |'--'.     / |   | '  ,/ |   |    \|   ,/    |   ,/     "
+	@echo "\033[1;36m;   | |.-'      ;   |.' '   : |      ;   |.'   .--'---'  ;   : ;--'  |   :   .''---'     '---'      "
+	@echo "\033[1;36m|   ;/          '---'   ;   |.'      '---'               |   ,/      |   | ,'                       "
+	@echo "\033[1;36m'---'                   '---'                            '---'       .----'                         "
+	@echo " "
+	@echo "\033[1;37m▐▌ DONE ▐▌"
+	@echo " "
 
 clean:
 	@$(RM)
